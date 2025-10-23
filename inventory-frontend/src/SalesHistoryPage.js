@@ -53,43 +53,50 @@ function SalesHistoryPage({ user }) {
     };
 
 
-    return (
-        <div>
-            <h2 className="mb-4">Sales History</h2>
-            {loading ? <p className="text-center p-5">Loading history...</p> : (
-            <div className="card shadow-sm"> {/* Added card wrapper */}
-                <div className="table-responsive">
-                    <table className="table table-hover table-striped mb-0"> {/* Added striped */}
-                        <thead className="table-light">
-                            <tr>
-                                <th>Invoice ID</th>
-                                <th>Date</th>
-                                <th>Product Name</th>
-                                <th className="text-center">Quantity</th>
-                                <th className="text-end">Unit Price</th>
-                                <th className="text-end">Total Amount</th>
+// SalesHistoryPage.js
+// ... imports and functions ...
+
+return (
+    <div>
+        <h2 className="mb-4">Sales History</h2>
+        {loading ? <p>Loading...</p> : (
+        <div className="card shadow-sm"> {/* Keep card wrapper */}
+            <div className="table-responsive">
+                {/* **Add table class** */}
+                <table className="table table-hover table-striped mb-0 sales-history-table">
+                    <thead className="table-light">
+                        <tr>
+                            <th>Invoice ID</th>
+                            <th>Date</th>
+                            <th>Product Name</th>
+                            <th className="text-center">Quantity</th>
+                            <th className="text-end">Unit Price</th>
+                            <th className="text-end">Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {history.length > 0 ? history.map((item, index) => (
+                            <tr key={item.invoice_id + index}>
+                                {/* **Add data-label attributes** */}
+                                <td data-label="Invoice ID">{item.invoice_id}</td>
+                                <td data-label="Date">{formatDateTime(item.sale_date)}</td>
+                                <td data-label="Product">{item.product_name}</td>
+                                <td data-label="Quantity">{item.quantity_sold}</td>
+                                <td data-label="Unit Price">{formatCurrency(item.sale_price_each)}</td>
+                                <td data-label="Total">{formatCurrency(item.total_amount)}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {history.length > 0 ? history.map((item, index) => (
-                                <tr key={item.invoice_id + index}> {/* Use a more unique key if possible */}
-                                    <td>{item.invoice_id}</td>
-                                    <td>{formatDateTime(item.sale_date)}</td>
-                                    <td>{item.product_name}</td>
-                                    <td className="text-center">{item.quantity_sold}</td>
-                                    <td className="text-end">{formatCurrency(item.sale_price_each)}</td>
-                                    <td className="text-end">{formatCurrency(item.total_amount)}</td>
-                                </tr>
-                            )) : (
-                                <tr><td colSpan="6" className="text-center text-muted p-4">No sales recorded yet.</td></tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
+                        )) : (
+                            <tr><td colSpan="6" className="text-center text-muted p-4">No sales recorded yet.</td></tr>
+                        )}
+                    </tbody>
+                </table>
             </div>
-            )}
         </div>
-    );
+        )}
+    </div>
+);
+
+// close the SalesHistoryPage function body
 }
 
 export default SalesHistoryPage;

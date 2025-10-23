@@ -539,3 +539,171 @@ body.theme-main {
 .toast-confirmation { padding: 10px; }
 .toast-confirmation p { margin-bottom: 10px; }
 .toast-confirmation div { display: flex; justify-content: flex-end; gap: 5px;}
+
+/* =================================================================== */
+/* --- MOBILE RESPONSIVENESS (Add this block at the end) --- */
+/* =================================================================== */
+
+@media (max-width: 767.98px) {
+
+  /* --- General Adjustments --- */
+  .main-content-wrapper {
+    padding: 1rem; /* Reduce padding on mobile */
+    padding-top: 70px; /* Keep space for mobile header */
+  }
+
+  /* --- Page Header Adjustments --- */
+  .page-header {
+    flex-direction: column; /* Stack title and buttons vertically */
+    align-items: flex-start; /* Align title left */
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+  .page-header h2 {
+    margin-bottom: 0.75rem; /* Add space below title */
+  }
+  .page-header .actions {
+    width: 100%; /* Make buttons take full width */
+    display: flex; /* Arrange buttons side-by-side */
+    gap: 0.5rem; /* Add space between buttons */
+  }
+  .page-header .actions .btn {
+    flex-grow: 1; /* Make buttons share width equally */
+    font-size: 0.9rem; /* Slightly smaller text */
+    padding: 0.5rem 0.75rem; /* Adjust padding */
+  }
+  .page-header .actions .btn svg {
+     width: 16px; /* Smaller icons */
+     height: 16px;
+     margin-right: 0.3rem;
+  }
+
+  /* --- Search Bar --- */
+  .search-bar.card {
+     max-width: 100%; /* Full width */
+     margin-bottom: 1rem !important;
+  }
+
+  /* --- Tabs --- */
+  .nav-tabs {
+    flex-wrap: nowrap; /* Prevent wrapping */
+    overflow-x: auto; /* Allow horizontal scrolling */
+    /* Add padding to prevent scrollbar overlap */
+    padding-bottom: 10px;
+    margin-bottom: 1rem !important;
+  }
+  .nav-tabs .nav-item {
+    white-space: nowrap; /* Keep tab text on one line */
+  }
+
+  /* --- **Table to Card Transformation** --- */
+  .table-responsive.card {
+    border: none; /* Remove card border */
+    box-shadow: none; /* Remove card shadow */
+    background-color: transparent; /* Make card background transparent */
+  }
+  .table thead {
+    display: none; /* Hide table header */
+  }
+  .table tbody, .table tr, .table td {
+    display: block; /* Stack table elements */
+    width: 100%;
+  }
+  .table tr {
+    /* Style each row as a card */
+    background-color: var(--light-content-bg);
+    border: 1px solid var(--light-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .table td {
+    border: none; /* Remove cell borders */
+    padding: 0.4rem 0; /* Adjust vertical padding */
+    display: flex; /* Use flex for label/value layout */
+    justify-content: space-between; /* Space out label and value */
+    align-items: center;
+    text-align: right; /* Align value text to the right */
+  }
+  /* Add labels using ::before pseudo-element */
+  .table td::before {
+    content: attr(data-label); /* Use data-label attribute from JSX */
+    font-weight: 500;
+    text-align: left; /* Align label text to the left */
+    margin-right: 1rem;
+    color: var(--light-text-secondary);
+  }
+  /* Special handling for image and actions */
+  .table td.td-image {
+    justify-content: center; /* Center image */
+    margin-bottom: 0.5rem;
+  }
+  .table td.td-image::before { display: none; } /* No label for image */
+
+  .table td.td-actions {
+    justify-content: center; /* Center action buttons */
+    margin-top: 0.5rem;
+  }
+   .table td.td-actions::before { display: none; } /* No label for actions */
+
+   .action-buttons .btn {
+       padding: 0.3rem 0.6rem; /* Slightly larger buttons on mobile */
+   }
+   .action-buttons .btn svg {
+       width: 16px;
+       height: 16px;
+   }
+   
+   /* --- Analytics Page Adjustments --- */
+  .page-header .actions .btn-group .btn {
+    padding: 0.5rem 0.75rem; /* Adjust button padding */
+    font-size: 0.85rem; /* Slightly smaller text */
+  }
+  /* Ensure cards stack nicely */
+  .analytics-cards-row > div {
+     margin-bottom: 1rem; /* Add space between stacked cards */
+  }
+  .analytics-chart-card .card-body {
+    padding: 0.5rem; /* Reduce padding around chart on mobile */
+  }
+
+
+  /* --- **Sales History Table to Card Transformation** --- */
+  .sales-history-table thead {
+    display: none; /* Hide table header */
+  }
+  .sales-history-table tbody,
+  .sales-history-table tr,
+  .sales-history-table td {
+    display: block; /* Stack table elements */
+    width: 100%;
+  }
+  .sales-history-table tr {
+    /* Style each row as a card */
+    background-color: var(--light-content-bg);
+    border: 1px solid var(--light-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .sales-history-table td {
+    border: none; /* Remove cell borders */
+    padding: 0.4rem 0; /* Adjust vertical padding */
+    display: flex; /* Use flex for label/value layout */
+    justify-content: space-between; /* Space out label and value */
+    align-items: center;
+    text-align: right; /* Align value text to the right */
+    word-break: break-word; /* Allow long invoice IDs to wrap */
+  }
+  /* Add labels using ::before pseudo-element */
+  .sales-history-table td::before {
+    content: attr(data-label); /* Use data-label attribute from JSX */
+    font-weight: 500;
+    text-align: left; /* Align label text to the left */
+    margin-right: 1rem;
+    color: var(--light-text-secondary);
+    white-space: nowrap; /* Prevent label from wrapping */
+  }
+}

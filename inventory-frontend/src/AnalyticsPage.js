@@ -69,59 +69,73 @@ function AnalyticsPage({ user }) {
         }],
     };
 
-    return (
+return (
         <div>
-            <div className="page-header">
-                <h2>Product Analytics</h2>
-                <div className="actions">
+            {/* Page Header: Buttons wrap nicely on small screens */}
+            <div className="page-header flex-column flex-md-row align-items-start align-items-md-center"> {/* Stack on mobile, row on medium+ */}
+                <h2 className="mb-3 mb-md-0">Product Analytics</h2> {/* Add margin bottom on mobile */}
+                <div className="actions w-100 w-md-auto"> {/* Full width on mobile, auto on medium+ */}
                     {/* Use btn-group for better styling */}
-                    <div className="btn-group">
-                        <button className={`btn ${period === 'daily' ? 'btn-primary' : 'btn-outline-secondary'}`} onClick={() => setPeriod('daily')}>Daily</button>
-                        <button className={`btn ${period === 'weekly' ? 'btn-primary' : 'btn-outline-secondary'}`} onClick={() => setPeriod('weekly')}>Weekly</button>
-                        <button className={`btn ${period === 'monthly' ? 'btn-primary' : 'btn-outline-secondary'}`} onClick={() => setPeriod('monthly')}>Monthly</button>
+                    <div className="btn-group w-100 w-md-auto" role="group" aria-label="Analytics Period">
+                        <button className={`btn btn-sm ${period === 'daily' ? 'btn-primary' : 'btn-outline-secondary'}`} onClick={() => setPeriod('daily')}>Daily</button>
+                        <button className={`btn btn-sm ${period === 'weekly' ? 'btn-primary' : 'btn-outline-secondary'}`} onClick={() => setPeriod('weekly')}>Weekly</button>
+                        <button className={`btn btn-sm ${period === 'monthly' ? 'btn-primary' : 'btn-outline-secondary'}`} onClick={() => setPeriod('monthly')}>Monthly</button>
                     </div>
                 </div>
             </div>
 
-            {loading ? <p className="text-center p-5">Loading analytics...</p> :
-            (!analyticsData ? <p className="text-center p-5 text-danger">Failed to load analytics data.</p> :
+            {/* Loading/Error State */}
+            {loading ? <div className="text-center p-5"><div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div></div> :
+            !analyticsData ? <p className="text-center p-5 text-danger">Failed to load analytics data.</p> :
             (
+                // Data Display Section
                 <>
+                    {/* Summary Cards Row */}
+                    {/* Uses Bootstrap grid: stacks on small screens, side-by-side on medium+ */}
                     <div className="row mb-4">
+                        {/* Highest Selling Card */}
                         <div className="col-md-6 mb-3 mb-md-0">
                             <div className="card h-100 shadow-sm">
-                                <div className="card-body text-center">
-                                    <h5 className="card-title text-muted">Highest Selling ({period})</h5>
+                                <div className="card-body text-center d-flex flex-column justify-content-center"> {/* Centering content */}
+                                    <h5 className="card-title text-muted mb-2">Highest Selling ({period})</h5>
                                     {analyticsData?.highestProduct ? (
                                         <>
-                                            <h3 className="card-text">{analyticsData.highestProduct.product_name}</h3>
-                                            <p className="fs-4 text-success">{analyticsData.highestProduct.total_quantity} units</p>
+                                            <h3 className="card-text mb-1">{analyticsData.highestProduct.product_name}</h3>
+                                            <p className="fs-4 text-success mb-0">{analyticsData.highestProduct.total_quantity} units</p>
                                         </>
-                                    ) : <p className="text-muted">No sales data.</p>}
+                                    ) : <p className="text-muted mb-0">No sales data.</p>}
                                 </div>
                             </div>
                         </div>
+                        {/* Lowest Selling Card */}
                         <div className="col-md-6">
                             <div className="card h-100 shadow-sm">
-                                <div className="card-body text-center">
-                                    <h5 className="card-title text-muted">Lowest Selling ({period})</h5>
+                                <div className="card-body text-center d-flex flex-column justify-content-center"> {/* Centering content */}
+                                    <h5 className="card-title text-muted mb-2">Lowest Selling ({period})</h5>
                                     {analyticsData?.lowestProduct ? (
                                         <>
-                                            <h3 className="card-text">{analyticsData.lowestProduct.product_name}</h3>
-                                            <p className="fs-4 text-danger">{analyticsData.lowestProduct.total_quantity} units</p>
+                                            <h3 className="card-text mb-1">{analyticsData.lowestProduct.product_name}</h3>
+                                            <p className="fs-4 text-danger mb-0">{analyticsData.lowestProduct.total_quantity} units</p>
                                         </>
-                                    ) : <p className="text-muted">No sales data.</p>}
+                                    ) : <p className="text-muted mb-0">No sales data.</p>}
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {/* Chart Card */}
                     <div className="card shadow-sm">
                         <div className="card-body">
-                           {(analyticsData?.chartData?.length ?? 0) > 0 ? <Bar options={chartOptions} data={chartData} /> : <p className="text-center text-muted p-5">No chart data available for this period.</p>}
+                           {(analyticsData?.chartData?.length ?? 0) > 0 ?
+                                <div style={{ minHeight: '300px' }}> {/* Ensure chart has minimum height */}
+                                    <Bar options={chartOptions} data={chartData} />
+                                </div>
+                                :
+                                <p className="text-center text-muted p-5">No chart data available for this period.</p>
+                            }
                         </div>
                     </div>
                 </>
-            ))}
+            )}
         </div>
     );
 }
